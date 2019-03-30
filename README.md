@@ -9,3 +9,7 @@ running on proxy because of latency issues on Shockbyte
 ## Usage
 
 In plugin data folder, there's a `libs` subdirectory. Put desired libraries in there and enjoy.
+
+## Known caveats
+
+* Won't work with plugins which require needed libs in `onLoad` stage
