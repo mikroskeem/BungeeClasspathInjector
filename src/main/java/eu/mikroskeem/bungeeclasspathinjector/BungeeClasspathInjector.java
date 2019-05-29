@@ -25,7 +25,6 @@
 
 package eu.mikroskeem.bungeeclasspathinjector;
 
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.File;
@@ -67,16 +66,18 @@ public final class BungeeClasspathInjector extends Plugin {
     }
 
     private void addUrl(URL url) throws Exception {
-        URLClassLoader classLoader = (URLClassLoader) ProxyServer.class.getClassLoader();
-        addUrlMethod.invoke(classLoader, url);
+        addUrlMethod.invoke(targetClassLoader, url);
     }
 
     private static Method addUrlMethod;
+    private static URLClassLoader targetClassLoader;
 
     static {
         try {
             addUrlMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             addUrlMethod.setAccessible(true);
         } catch (Exception ignored) {}
+
+        targetClassLoader = (URLClassLoader) BungeeClasspathInjector.class.getClassLoader();
     }
 }
